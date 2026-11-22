@@ -1,0 +1,147 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import logo from '../assets/brand/talehug-logo.png';
+import wordmark from '../assets/brand/talehug-wordmark.png';
+import { site, steps, features, safety, plans, faqs } from '../data/site';
+
+const bars = [30, 55, 80, 45, 100, 65, 90, 50, 75, 35, 60, 40, 85, 55, 30];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MobileApplication',
+  name: site.name,
+  description: site.shortDescription,
+  operatingSystem: 'Android, iOS',
+  applicationCategory: 'EducationalApplication',
+  audience: { '@type': 'PeopleAudience', suggestedMinAge: 3, suggestedMaxAge: 8 },
+};
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+<BaseLayout>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+
+  <section class="hero section">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Calm bedtime stories · ages 3 to 8</p>
+        <h1>Bedtime stories in the voice your child <em>loves most.</em></h1>
+        <p class="lead">A calm, ad-free story app. Your child picks a story, picks who reads it, and settles in, while gentle pictures and big words move along with the voice.</p>
+        <div class="btn-row">
+          {site.appStoreUrl ? <a class="btn" href={site.appStoreUrl}>App Store</a> : <span class="btn soon">App Store · coming soon</span>}
+          {site.playStoreUrl ? <a class="btn" href={site.playStoreUrl}>Google Play</a> : <span class="btn soon">Google Play · coming soon</span>}
+        </div>
+        <p class="badge-note">No ads. No tracking. Nothing to buy in front of your child.</p>
+      </div>
+      <Image src={logo} alt="Three generations of a family reading one storybook together, with the taleHUG logo" width={640} loading="eager" />
+    </div>
+  </section>
+
+  <section id="how" class="section">
+    <div class="wrap center">
+      <p class="eyebrow">How it works</p>
+      <h2>Three quiet steps to sleep</h2>
+      <div class="grid steps" style="text-align:left">
+        {steps.map((s) => (
+          <div class="card reveal"><div class="step-n">{s.n}</div><h3>{s.title}</h3><p>{s.text}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="voice" class="voice section">
+    <div class="wrap">
+      <div class="reveal">
+        <p class="eyebrow">The family voice</p>
+        <h2>Grandma is far away. Tonight’s story still sounds like her.</h2>
+        <p class="lead">Children hear stories in the voice of someone they love.</p>
+        <ol>
+          <li><span>Record a short passage in the app, or upload a voice note, such as one from a grandparent far away.</span></li>
+          <li><span>Consent is spoken at the start of the recording and confirmed by the parent.</span></li>
+          <li><span>Choose <strong>Make stories in your voice</strong>. The story is read in that voice, saved, and played like any other narrator, even offline.</span></li>
+        </ol>
+        <p class="note">Up to 2 family voices per account, in English, Hindi, Tamil or Malayalam. Deleting a voice deletes everything made from it. Family voice is part of the “My Family Voice” plan, coming soon.</p>
+      </div>
+      <div class="reveal">
+        <div class="wave" aria-hidden="true">
+          {bars.map((h, i) => <span style={`--h:${h}%;--d:${(i * 0.18).toFixed(2)}s`} />)}
+        </div>
+        <div class="quote">“Once upon a time, in a little house at the edge of the forest…”<small>Read tonight by a voice they know.</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="section">
+    <div class="wrap center">
+      <p class="eyebrow">Features</p>
+      <h2>Made for winding down</h2>
+      <p class="lead">Deep calm colours, soft rounded shapes, slow gentle motion. Nothing flashing, no sudden loud sounds.</p>
+      <div class="grid features" style="text-align:left">
+        {features.map((f) => <div class="card reveal"><h3>{f.title}</h3><p>{f.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section id="safe" class="tint section">
+    <div class="wrap center">
+      <p class="eyebrow">Safe for children</p>
+      <h2>You stay in control</h2>
+      <p class="lead">Children only see covers, faces and big buttons. Everything else sits behind a parent gate.</p>
+      <div class="grid features" style="text-align:left">
+        {safety.map((f) => <div class="card reveal"><h3>{f.title}</h3><p>{f.text}</p></div>)}
+      </div>
+    </div>
+  </section>
+
+  <section id="plans" class="section">
+    <div class="wrap center">
+      <p class="eyebrow">Plans</p>
+      <h2>Start free, grow when you’re ready</h2>
+      {!site.plansConfirmed && <p class="lead">Final pricing will be shown at launch.</p>}
+      <div class="grid plans" style="text-align:left">
+        {plans.map((p) => (
+          <div class:list={['card plan reveal', { featured: p.featured }]}>
+            <h3>{p.name}</h3>
+            {site.plansConfirmed || p.price === 'Free'
+              ? <div class="price">{p.price}</div>
+              : <div class="price">Pricing at launch</div>}
+            {p.note && (site.plansConfirmed || p.note === 'Coming soon') && <div class="note">{p.note}</div>}
+            <ul>{p.items.map((i) => <li>{i}</li>)}</ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="tint section">
+    <div class="wrap">
+      <div class="center"><p class="eyebrow">FAQ</p><h2>Questions grown-ups ask</h2></div>
+      <div class="faq">
+        {faqs.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
+      </div>
+      <p class="center" style="margin-top:2rem">
+        {site.supportEmail
+          ? <>Still wondering? <a href={`mailto:${site.supportEmail}`}>{site.supportEmail}</a></>
+          : <>Support contact coming soon.</>}
+      </p>
+    </div>
+  </section>
+
+  <footer slot="footer" class="footer">
+    <div class="wrap">
+      <div>
+        <Image src={wordmark} alt="taleHUG" width={200} />
+        <p><small>© {new Date().getFullYear()} {site.sellerName || site.name}. Made with <span class="heart" style="color:#ff8a8a">♥</span> for bedtime.</small></p>
+      </div>
+      <p>
+        {site.privacyUrl ? <a href={site.privacyUrl}>Privacy policy</a> : <small>Privacy policy coming soon</small>}
+        &nbsp;·&nbsp;
+        {site.termsUrl ? <a href={site.termsUrl}>Terms</a> : <small>Terms coming soon</small>}
+      </p>
+    </div>
+  </footer>
+</BaseLayout>
