@@ -8,7 +8,7 @@ export const site = {
   appStoreUrl: '',
   playStoreUrl: '',
   // [TBC: support email, seller / company name]
-  supportEmail: '',
+  supportEmail: 'talehug.stories@gmail.com',
   sellerName: '',
   // [TBC: privacy policy and terms are drafted; publish and set URLs]
   privacyUrl: '',
