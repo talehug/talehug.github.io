@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://didhinm.github.io',
-  base: '/talehugsite', // remove when a custom domain is connected
+  site: 'https://talehug.github.io',
   output: 'static',
   trailingSlash: 'always',
   build: { format: 'directory' },
