@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import { Content } from '../../docs/PRIVACY_POLICY.md';
+---
+<BaseLayout title="Privacy Policy | TaleHUG" description="How TaleHUG handles personal data, including family voice recordings. No ads, no tracking.">
+  <article class="legal wrap"><Content /></article>
+  <Footer slot="footer" />
+</BaseLayout>

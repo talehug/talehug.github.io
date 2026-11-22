@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import { Content } from '../../docs/TERMS_AND_CONDITIONS.md';
+---
+<BaseLayout title="Terms and Conditions | TaleHUG" description="The terms for using the TaleHUG app, subscriptions and the family voice feature.">
+  <article class="legal wrap"><Content /></article>
+  <Footer slot="footer" />
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import { Image } from 'astro:assets';
+import wordmark from '../assets/brand/talehug-wordmark.png';
+import { site } from '../data/site';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<footer class="footer">
+  <div class="wrap">
+    <div>
+      <Image src={wordmark} alt="taleHUG" width={200} />
+      <p class="tag">Every tale deserves a warm embrace.</p>
+      <p><small>© {new Date().getFullYear()} {site.sellerName || site.name}. Made with <span class="heart" style="color:#ff8a8a">♥</span> for bedtime.</small></p>
+    </div>
+    <p>
+      <a href={`${base}${site.privacyUrl}`}>Privacy policy</a>
+      &nbsp;·&nbsp;
+      <a href={`${base}${site.termsUrl}`}>Terms</a>
+      {site.supportEmail && <>&nbsp;·&nbsp;<a href={`mailto:${site.supportEmail}`}>Contact</a></>}
+    </p>
+  </div>
+</footer>

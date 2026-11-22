@@ -155,3 +155,25 @@ details p { margin: .8rem 0 0; color: var(--muted); }
 .stars input:focus-visible + label { outline: 3px solid var(--green-olive); border-radius: .4rem; }
 .stars label:hover { transform: scale(1.1); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.footer .tag { font-family: var(--font-head); font-size: 1.15rem; color: var(--lamp); margin: .8rem 0 .4rem; }
+
+/* promo images */
+.promo { width: 100%; height: auto; border-radius: 2rem; box-shadow: var(--shadow); }
+.family { display: grid; gap: 2.5rem; align-items: center; }
+@media (min-width: 52rem) { .family { grid-template-columns: 1.1fr .9fr; } }
+.voice .promo { box-shadow: 0 1rem 2.4rem -1rem rgb(0 0 0 / .6); margin-bottom: 1.5rem; }
+
+/* legal pages */
+.legal { max-width: 52rem; padding-block: clamp(2.5rem, 6vw, 4.5rem); font-size: 1.02rem; }
+.legal h1 { font-size: clamp(2rem, 1.5rem + 2.4vw, 3rem); }
+.legal h2 { font-size: 1.5rem; margin-top: 2.4em; }
+.legal h3 { font-size: 1.15rem; margin-top: 1.8em; }
+.legal ul, .legal ol { padding-left: 1.4rem; }
+.legal li { margin-bottom: .4em; }
+.legal hr { border: 0; border-top: 1px solid rgb(11 66 20 / .15); margin: 2.5rem 0; }
+.legal code { background: var(--green-soft); padding: .1em .35em; border-radius: .35em; font-size: .9em; }
+.legal table { display: block; overflow-x: auto; border-collapse: collapse; margin: 1.2rem 0; font-size: .92rem; }
+.legal th, .legal td { text-align: left; vertical-align: top; padding: .6rem .8rem; border-bottom: 1px solid rgb(11 66 20 / .15); min-width: 8rem; }
+.legal th { background: var(--green-soft); font-family: var(--font-head); color: var(--green-dark); font-weight: 500; }
+.legal blockquote { margin: 1.2rem 0; padding: .2rem 1.2rem; border-left: 4px solid var(--green-olive); background: var(--green-soft); border-radius: 0 1rem 1rem 0; }

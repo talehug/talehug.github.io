@@ -3,16 +3,15 @@ export const site = {
   name: 'TaleHUG',
   tagline: 'Bedtime stories in the voice your child loves most.',
   shortDescription:
-    'TaleHUG: calm bedtime stories, read in a voice they love. No ads, no tracking.',
+    'TaleHUG: little stories, big-hearted memories. Calm bedtime stories read in a voice they love. No ads, no tracking.',
   // [TBC: store links and launch date] Set to real URLs to switch the buttons on.
   appStoreUrl: '',
   playStoreUrl: '',
   // [TBC: support email, seller / company name]
   supportEmail: 'talehug.stories@gmail.com',
   sellerName: '',
-  // [TBC: privacy policy and terms are drafted; publish and set URLs]
-  privacyUrl: '',
-  termsUrl: '',
+  privacyUrl: '/privacy/',
+  termsUrl: '/terms/',
   // Flip to true once plan names and prices are confirmed by the owner.
   plansConfirmed: false,
 };
