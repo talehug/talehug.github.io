@@ -132,3 +132,26 @@ details p { margin: .8rem 0 0; color: var(--muted); }
   .reveal.in { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) { .wave span { animation: none; } html { scroll-behavior: auto; } }
+
+/* feedback form */
+.fb { max-width: 40rem; margin: 2.5rem auto 0; display: grid; gap: 1.4rem; padding: clamp(1.4rem, 4vw, 2.2rem); }
+.fb-field { border: 0; padding: 0; margin: 0; min-width: 0; }
+.fb label, .fb legend { display: block; font-family: var(--font-head); font-size: 1.05rem; color: var(--green-dark); margin-bottom: .4rem; padding: 0; }
+.fb .req { font-family: var(--font-body); font-size: .75rem; color: var(--muted); font-weight: 400; margin-left: .3rem; }
+.fb input[type=email], .fb input[type=text], .fb select, .fb textarea { width: 100%; font: inherit; color: var(--ink); background: var(--cream); border: 2px solid rgb(11 66 20 / .2); border-radius: .9rem; padding: .75rem 1rem; }
+.fb textarea { resize: vertical; }
+.fb input:focus, .fb select:focus, .fb textarea:focus { outline: 3px solid var(--green-olive); outline-offset: 1px; border-color: transparent; }
+.fb .hint { font-size: .85rem; color: var(--muted); margin: .35rem 0 0; }
+.fb .err { font-size: .9rem; color: #b00020; margin: .35rem 0 0; }
+.fb button { justify-self: start; cursor: pointer; }
+.fb button:disabled { opacity: .6; cursor: wait; }
+.fb-status { margin: 0; font-weight: 700; min-height: 1.6em; }
+.fb-status.good { color: var(--green-olive); }
+.fb-status.bad { color: #b00020; }
+.stars { display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; gap: .15rem; }
+.stars input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.stars label { margin: 0; font-size: 2.2rem; line-height: 1; color: #d9d2c3; cursor: pointer; transition: color .15s, transform .15s; }
+.stars label:hover, .stars label:hover ~ label, .stars input:checked ~ label { color: var(--lamp); }
+.stars input:focus-visible + label { outline: 3px solid var(--green-olive); border-radius: .4rem; }
+.stars label:hover { transform: scale(1.1); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

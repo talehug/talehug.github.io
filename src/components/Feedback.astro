@@ -1,0 +1,138 @@
+---
+import { feedback } from '../data/site';
+const devices = feedback.devices;
+const stars = [5, 4, 3, 2, 1]; // rendered reversed so CSS can fill stars left of the chosen one
+---
+<section id="feedback" class="section">
+  <div class="wrap">
+    <div class="center">
+      <p class="eyebrow">Feedback</p>
+      <h2>Tell us how bedtime went</h2>
+      <p class="lead">Your ideas shape the next story. Tell us what you loved, what didn’t work, or a story you’d like to hear.</p>
+    </div>
+
+    <form id="feedback-form" class="fb card" novalidate
+      data-form-id={feedback.formId}
+      data-entries={JSON.stringify(feedback.entries)}>
+
+      <div class="fb-field">
+        <label for="fb-email">Your email <span class="req">required</span></label>
+        <input id="fb-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+        <p class="hint">Only used to reply to you. Never shared.</p>
+        <p class="err" data-err-for="email" hidden>Please enter a valid email address.</p>
+      </div>
+
+      <div class="fb-field">
+        <label for="fb-device">Device you use TaleHUG on <span class="req">required</span></label>
+        <select id="fb-device" name="device" required>
+          <option value="">Choose one</option>
+          {devices.map((d) => <option value={d}>{d}</option>)}
+        </select>
+        <p class="err" data-err-for="device" hidden>Please choose a device.</p>
+      </div>
+
+      <fieldset class="fb-field">
+        <legend>Rate the app <span class="req">required</span></legend>
+        <div class="stars">
+          {stars.map((n) => (
+            <>
+              <input type="radio" id={`app-${n}`} name="appRating" value={String(n)} />
+              <label for={`app-${n}`} title={`${n} out of 5`}><span class="sr">{n} out of 5</span>★</label>
+            </>
+          ))}
+        </div>
+        <p class="err" data-err-for="appRating" hidden>Please give the app a rating.</p>
+      </fieldset>
+
+      <fieldset class="fb-field">
+        <legend>Rate the stories</legend>
+        <div class="stars">
+          {stars.map((n) => (
+            <>
+              <input type="radio" id={`story-${n}`} name="storyRating" value={String(n)} />
+              <label for={`story-${n}`} title={`${n} out of 5`}><span class="sr">{n} out of 5</span>★</label>
+            </>
+          ))}
+        </div>
+      </fieldset>
+
+      <div class="fb-field">
+        <label for="fb-suggestion">Any story suggestion?</label>
+        <textarea id="fb-suggestion" name="storySuggestion" rows="3" maxlength="1000" placeholder="A story about a brave little…"></textarea>
+      </div>
+
+      <div class="fb-field">
+        <label for="fb-feedback">Your feedback</label>
+        <textarea id="fb-feedback" name="feedback" rows="5" maxlength="2000" placeholder="What did you love? What could be better?"></textarea>
+      </div>
+
+      <!-- honeypot: real people never see or fill this -->
+      <div class="sr" aria-hidden="true"><label>Leave empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+      <button class="btn" type="submit">Send feedback</button>
+      <p class="fb-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('feedback-form') as HTMLFormElement | null;
+  if (form) {
+    const status = form.querySelector('.fb-status') as HTMLElement;
+    const btn = form.querySelector('button[type=submit]') as HTMLButtonElement;
+    const entries = JSON.parse(form.dataset.entries || '{}') as Record<string, string>;
+    const formId = form.dataset.formId || '';
+
+    const show = (name: string, bad: boolean) => {
+      const el = form.querySelector(`[data-err-for="${name}"]`) as HTMLElement | null;
+      if (el) el.hidden = !bad;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = '';
+      status.className = 'fb-status';
+      const data = new FormData(form);
+      if (data.get('website')) return; // bot
+
+      const email = String(data.get('email') || '').trim();
+      const checks: Record<string, boolean> = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email),
+        device: !!data.get('device'),
+        appRating: !!data.get('appRating'),
+      };
+      let ok = true;
+      for (const [k, v] of Object.entries(checks)) { show(k, !v); if (!v) ok = false; }
+      if (!ok) { (form.querySelector('[data-err-for]:not([hidden])') as HTMLElement | null)?.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+
+      if (!formId || Object.values(entries).some((v) => !v)) {
+        status.textContent = 'The feedback form is not connected yet. Please email us instead.';
+        status.classList.add('bad');
+        return;
+      }
+
+      const body = new URLSearchParams();
+      for (const key of Object.keys(entries)) {
+        const val = String(data.get(key) || '').trim();
+        if (val) body.append(entries[key], val);
+      }
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        // Google Forms does not allow CORS reads, so we send "no-cors" and cannot read the reply.
+        await fetch(`https://docs.google.com/forms/d/e/${formId}/formResponse`, {
+          method: 'POST', mode: 'no-cors', body,
+        });
+        form.reset();
+        status.textContent = 'Thank you! Your feedback has been sent.';
+        status.classList.add('good');
+      } catch {
+        status.textContent = 'Something went wrong sending your feedback. Please try again, or email us.';
+        status.classList.add('bad');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Send feedback';
+      }
+    });
+  }
+</script>

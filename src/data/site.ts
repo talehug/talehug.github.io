@@ -31,7 +31,7 @@ export const features = [
   { title: 'Works offline', text: 'Download stories and listen anywhere, with no internet.' },
   { title: 'Screen locked? Still plays', text: 'Lock-screen controls keep the story going.' },
   { title: 'More than one language', text: 'English first. Hindi, Tamil and Malayalam supported, Arabic planned.' },
-  { title: 'Made for little hands', text: 'Covers, faces and big buttons. Nothing to buy in front of the child.' },
+  { title: 'Made for little hands', text: 'Covers, faces and big buttons that little fingers can find.' },
 ];
 
 export const safety = [
@@ -65,7 +65,7 @@ export const plans = [
 ];
 
 export const faqs = [
-  { q: 'What ages is TaleHUG for?', a: 'Children aged 3 to 8. Parents and grandparents manage the account.' },
+  { q: 'What ages is TaleHUG for?', a: 'Children aged 2 to 9. Parents and grandparents manage the account.' },
   { q: 'Which languages are available?', a: 'English first. Hindi, Tamil and Malayalam stories are supported, with Arabic planned. The grown-up chooses the reading language.' },
   { q: 'Can we use it offline?', a: 'Yes. Download stories on Wi-Fi and listen anywhere. You can set downloads to Wi-Fi only.' },
   { q: 'How does the family voice work?', a: 'Record a short passage in the app, or upload a voice note such as one from a grandparent far away. The person’s consent is spoken at the start and confirmed by the parent. Then choose “Make stories in your voice” and the story is read in that voice, saved, and available offline.' },
@@ -74,3 +74,20 @@ export const faqs = [
   { q: 'How do I delete my account?', a: 'From inside the app, in the grown-up area. Deleting a voice deletes everything made from it.' },
   { q: 'Which devices?', a: 'Android and iOS phones and tablets. There is no web app.' },
 ];
+
+// Google Forms connection for the feedback form.
+// formId: the long id in the form's public link, docs.google.com/forms/d/e/<formId>/viewform
+// entries: the Google field id ("entry.123456") for each question.
+export const feedback = {
+  formId: '1FAIpQLSfukj17E649d1DsGcEIiX6sx6ESgAjvPIoxBE4jDpzFuhjeiA',
+  entries: {
+    email: 'entry.1613493496',
+    device: 'entry.1034529921',
+    appRating: 'entry.682563265',
+    storyRating: 'entry.1497230417',
+    storySuggestion: 'entry.1417861262',
+    feedback: 'entry.1345821187',
+  },
+  // Must match the dropdown options in the Google Form exactly.
+  devices: ['iPhone', 'iPad', 'Android phone', 'Android tablet', 'Other'],
+};

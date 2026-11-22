@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import Feedback from '../components/Feedback.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import logo from '../assets/brand/talehug-logo.png';
 import wordmark from '../assets/brand/talehug-wordmark.png';
@@ -13,7 +14,7 @@ const jsonLd = {
   description: site.shortDescription,
   operatingSystem: 'Android, iOS',
   applicationCategory: 'EducationalApplication',
-  audience: { '@type': 'PeopleAudience', suggestedMinAge: 3, suggestedMaxAge: 8 },
+  audience: { '@type': 'PeopleAudience', suggestedMinAge: 2, suggestedMaxAge: 9 },
 };
 const faqLd = {
   '@context': 'https://schema.org',
@@ -28,14 +29,14 @@ const faqLd = {
   <section class="hero section">
     <div class="wrap">
       <div>
-        <p class="eyebrow">Calm bedtime stories · ages 3 to 8</p>
+        <p class="eyebrow">Calm bedtime stories · ages 2 to 9</p>
         <h1>Bedtime stories in the voice your child <em>loves most.</em></h1>
         <p class="lead">A calm, ad-free story app. Your child picks a story, picks who reads it, and settles in, while gentle pictures and big words move along with the voice.</p>
         <div class="btn-row">
           {site.appStoreUrl ? <a class="btn" href={site.appStoreUrl}>App Store</a> : <span class="btn soon">App Store · coming soon</span>}
           {site.playStoreUrl ? <a class="btn" href={site.playStoreUrl}>Google Play</a> : <span class="btn soon">Google Play · coming soon</span>}
         </div>
-        <p class="badge-note">No ads. No tracking. Nothing to buy in front of your child.</p>
+        <p class="badge-note">No ads. No tracking.</p>
       </div>
       <Image src={logo} alt="Three generations of a family reading one storybook together, with the taleHUG logo" width={640} loading="eager" />
     </div>
@@ -116,6 +117,8 @@ const faqLd = {
       </div>
     </div>
   </section>
+
+  <Feedback />
 
   <section id="faq" class="tint section">
     <div class="wrap">
