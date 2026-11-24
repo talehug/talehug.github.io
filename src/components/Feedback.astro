@@ -84,6 +84,17 @@ const stars = [5, 4, 3, 2, 1]; // rendered reversed so CSS can fill stars left o
     const entries = JSON.parse(form.dataset.entries || '{}') as Record<string, string>;
     const formId = form.dataset.formId || '';
 
+    // The TaleHUG app opens this page as /#feedback?email=... so the grown-up's account email is already filled in.
+    // The part after # is never sent to our server; we use it once, then take it out of the address bar.
+    const hash = window.location.hash;
+    if (hash.startsWith('#feedback?')) {
+      const email = (new URLSearchParams(hash.slice(hash.indexOf('?') + 1)).get('email') || '').trim();
+      const field = form.querySelector('#fb-email') as HTMLInputElement | null;
+      if (field && email.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) field.value = email;
+      window.history.replaceState(null, '', window.location.pathname + window.location.search + '#feedback');
+      document.getElementById('feedback')?.scrollIntoView();
+    }
+
     const show = (name: string, bad: boolean) => {
       const el = form.querySelector(`[data-err-for="${name}"]`) as HTMLElement | null;
       if (el) el.hidden = !bad;
